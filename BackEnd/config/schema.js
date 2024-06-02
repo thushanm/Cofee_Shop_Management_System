@@ -1,11 +1,17 @@
 
 const mongoose =  require('mongoose')
 mongoose.set('strictQuery', false);
+
+const adminSchema = new mongoose.Schema({
+    adName:{type: String, required: true, minlength: 2, trim: true},
+    adPwd:{type: String, required: true, minlength: 2}
+
+})
 const userSchema = new mongoose.Schema({
     uName: { type: String, required: true, minlength: 2, trim: true },
-    pNumber: { type: Number, required: false },
-    role: { type: String, required: true, minlength: 2 },
-    pass: { type: String, required: true, minlength: 2 },
+    pNumber: { type: Number, required: false,maxLength:15,minLength:10 },
+    role: { type: String, required: false, minlength: 2 },
+    pass: { type: String, required: false, minlength: 2 },
 });
 
 const supplierSchema = new mongoose.Schema({
@@ -17,6 +23,7 @@ const supplierSchema = new mongoose.Schema({
 const itemSchema = new mongoose.Schema({
     itName: { type: String, required: true, minlength: 2, trim: true },
     qty: { type: Number, required: true, min: 1, max: 9999 },
+    itImg: { type: String, required: false },
     supplier: { type: mongoose.Schema.Types.ObjectId, ref: 'Supplier' },
 });
 
@@ -37,12 +44,14 @@ const orderDetailsSchema = new mongoose.Schema({
     amount: { type: Number, required: true },
     order: { type: mongoose.Schema.Types.ObjectId, ref: 'Order' }, // Reference the order
 });
+const admin = mongoose.model('admin',adminSchema)
+const user = mongoose.model('user', userSchema);
+const supplier = mongoose.model('supplier', supplierSchema);
+const item = mongoose.model('item', itemSchema);
+const order = mongoose.model('order', orderSchema);
+const payment = mongoose.model('payment', paymentSchema);
+const orderDetails = mongoose.model('orderDetails', orderDetailsSchema);
 
-const User = mongoose.model('User', userSchema);
-const Supplier = mongoose.model('Supplier', supplierSchema);
-const Item = mongoose.model('Item', itemSchema);
-const Order = mongoose.model('Order', orderSchema);
-const Payment = mongoose.model('Payment', paymentSchema);
-const OrderDetails = mongoose.model('OrderDetails', orderDetailsSchema);
+console.log("I am Works")
 
-module.exports = { User, Supplier, Item, Order, Payment, OrderDetails };
+module.exports = {admin,user, supplier, item, order, payment, orderDetails };
