@@ -1,4 +1,4 @@
-const express = require('express')
+
 const {supplier} = require("../config/schema")
 const {hash, genSalt} = require("bcrypt");
 
@@ -18,7 +18,6 @@ exports.addSupplier = async(req,res)=> {
         res.status(400).json({
             status: "fall",
             massage: err
-
 
         })
     }

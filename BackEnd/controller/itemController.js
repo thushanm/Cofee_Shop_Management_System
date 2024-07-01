@@ -33,6 +33,7 @@ exports.addItem = async (req, res) => {
                 data: newItem,
             });
         });
+
     } catch (err) {
         console.error(err);
         res.status(500).json({
